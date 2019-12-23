@@ -154,7 +154,7 @@ class Distance {
             eightND[7] = Math.abs(southEast-seedPixel);   // south-east pixel distance
 
             // Select only those pixels lesser than min distance
-            Vector<pixelDistance> minDist = new Vector<pixelDistance>();
+            Stack<pixelDistance> minDist = new Stack<>();
             /*
              * Pixel IDs:
              * 0 1 2
@@ -163,7 +163,7 @@ class Distance {
              */
             for(int i=0; i<eightND.length; i++) {
                 if(eightND[i] <= distance)
-                    minDist.add(new pixelDistance(eightND[i],i));
+                    minDist.push(new pixelDistance(eightND[i],i));
             }
             System.out.println(minDist);
 
