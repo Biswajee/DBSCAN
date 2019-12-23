@@ -91,14 +91,9 @@ class pixelDistance {
          * (x-1,y+1)  (x,y+1)  (x+1,y+1)
          * (x-1,y)    (x,y)    (x+1,y)
          * (x-1,y-1)  (x,y-1)  (x+1,y-1)
-         *
-         * Pixel IDs:
-         * 0 1 2
-         * 3   4
-         * 5 6 7
          */
-    private int distance;
-    private Pixel pixel;
+    int distance;
+    Pixel pixel;
     pixelDistance(int distance, Pixel pixel) {
         this.distance = distance;
         this.pixel = pixel;
@@ -156,21 +151,14 @@ class Distance {
 
             // Select only those pixels lesser than min distance
             Stack<Pixel> minDist = new Stack<>();
-            /*
-             * Pixel IDs:
-             * 0 1 2
-             * 3   4
-             * 5 6 7
-             */
-            for(int i=0; i<eightND.length; i++) {
-                if(eightND[i] <= distance)
-                    minDist.push(new pixelDistance(eightND[i],i));
+
+            for(pixelDistance p : eightND) {
+                if(p.distance <= distance)
+                    minDist.push(p.pixel);
             }
             System.out.println(minDist);
-
-
+            eightNeighbourDistance(Im, minDist.peek(), distance, minPoints);
         }
-        return 0;
     }
 }
 
