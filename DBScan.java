@@ -98,10 +98,10 @@ class pixelDistance {
          * 5 6 7
          */
     private int distance;
-    private int pixelID;
-    pixelDistance(int distance, int pixelID) {
+    private Pixel pixel;
+    pixelDistance(int distance, Pixel pixel) {
         this.distance = distance;
-        this.pixelID = pixelID;
+        this.pixel = pixel;
     }
 }
 
@@ -120,16 +120,17 @@ class Distance {
         return Math.abs(A.getGrayValue() - B.getGrayValue());
     }
 
-    int eightNeighbourDistance(Image Im, Pixel A, int distance, int minPoints) {
+    void eightNeighbourDistance(Image Im, Pixel A, int distance, int minPoints) {
         /*
          * (x-1,y+1)  (x,y+1)  (x+1,y+1)
          * (x-1,y)    (x,y)    (x+1,y)
          * (x-1,y-1)  (x,y-1)  (x+1,y-1)
          */
-        int eightND[] = new int[8];
+        Vector<pixelDistance> eightND = new Vector<>();
 
         if(A.coordX-1 < 0 || A.coordY-1 < 0 || A.coordX+1 > Im.width || A.coordY+1 > Im.height) {
             System.out.println("Cannot test boundary pixels for now !");
+            return;
         }
         else {
             int seedPixel = Im.getGrayValueFromCoord(A.coordX, A.coordY);
@@ -144,17 +145,17 @@ class Distance {
 
             // City block -- need to add euclidean distance and make section flexible
 
-            eightND[0] = Math.abs(northWest-seedPixel);   // north-west pixel distance
-            eightND[1] = Math.abs(top-seedPixel);         // top pixel distance
-            eightND[2] = Math.abs(northEast-seedPixel);   // north east pixel distance
-            eightND[3] = Math.abs(west-seedPixel);        // west pixel distance
-            eightND[4] = Math.abs(east-seedPixel);        // east pixel distance
-            eightND[5] = Math.abs(southWest-seedPixel);   // south-west pixel distance
-            eightND[6] = Math.abs(bottom-seedPixel);      // bottom pixel distance
-            eightND[7] = Math.abs(southEast-seedPixel);   // south-east pixel distance
+            eightND.add(new pixelDistance(Math.abs(northWest-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY+1),A.coordX-1, A.coordY+1)));   // north-west pixel distance
+            eightND.add(new pixelDistance(Math.abs(top-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY+1),A.coordX-1, A.coordY+1)));         // top pixel distance
+            eightND.add(new pixelDistance(Math.abs(northEast-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX+1, A.coordY+1),A.coordX+1, A.coordY+1)));   // north east pixel distance
+            eightND.add(new pixelDistance(Math.abs(west-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY),A.coordX-1, A.coordY)));        // west pixel distance
+            eightND.add(new pixelDistance(Math.abs(east-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX+1, A.coordY),A.coordX+1, A.coordY)));        // east pixel distance
+            eightND.add(new pixelDistance(Math.abs(southWest-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY-1),A.coordX-1, A.coordY-1)));   // south-west pixel distance
+            eightND.add(new pixelDistance(Math.abs(bottom-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX, A.coordY-1),A.coordX, A.coordY-1)));      // bottom pixel distance
+            eightND.add(new pixelDistance(Math.abs(southEast-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX+1, A.coordY-1),A.coordX+1, A.coordY-1)));   // south-east pixel distance
 
             // Select only those pixels lesser than min distance
-            Stack<pixelDistance> minDist = new Stack<>();
+            Stack<Pixel> minDist = new Stack<>();
             /*
              * Pixel IDs:
              * 0 1 2
