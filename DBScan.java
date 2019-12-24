@@ -41,7 +41,7 @@ class Image {
     int width;
     int height;
     int ImgArray[][];
-
+    boolean visited[];
     Image() {
         this.width = 255;
         this.height = 255;
@@ -52,16 +52,19 @@ class Image {
                 ImgArray[i++][j++] = 0;
             }
         }
+        visited = new boolean[width*height];
     }
 
     Image(int width, int height) {
         this.width = width;
         this.height = height;
         this.ImgArray = new int[width][height];
+        visited = new boolean[width*height];
     }
 
     void definePixel(Pixel X) {
         ImgArray[X.getX()][X.getY()] = X.getGrayValue();   // Updates gray value for single pixel on image
+        visited[X.getX()*X.getY()] = X.isVisited();        // Updates visited status of the pixel
     }
 
     void definePixelArray(Pixel[] X) {
@@ -70,6 +73,7 @@ class Image {
             ImgArray[i][j++] = X[k].getGrayValue();   // Updates gray value for array of pixels on image
             if(j==8) { j=0; i++; }
         }
+        // TODO: Section for registering visited pixels
     }
 
     // prints the image array for a given image object
@@ -83,6 +87,16 @@ class Image {
     }
     int getGrayValueFromCoord(int x,int y) {
         return ImgArray[x][y];
+    }
+
+    void printLabels() {
+        int i=0;
+        for(int j=0; j<width; j++) {
+            for(int k=0; k<height; k++) {
+                System.out.print(visited[i++] + "\t");
+            }
+            System.out.println();
+        }
     }
 }
 
@@ -126,7 +140,19 @@ class Distance {
         Vector<pixelDistance> eightND = new Vector<>();
 
         if(A.getX()-1 < 0 || A.getY()-1 < 0 || A.getX()+1 > Im.width || A.getY()+1 > Im.height || A.isVisited()==true) {
-             if(minDist.isEmpty() == false) minDist.pop();
+            for(Pixel p : minDist) {
+                System.out.println("("+p.getX()+","+p.getY()+","+p.getGrayValue()+","+p.isVisited()+")");
+            }
+
+            // Set pixel visited status to image class
+            for(Pixel p : minDist) {
+                Im.definePixel(p);
+            }
+
+            if(!minDist.isEmpty()) minDist.pop();
+
+
+            System.out.println("Success ! ");
         }
         else {
             int seedPixel = Im.getGrayValueFromCoord(A.getX(), A.getY());
@@ -159,11 +185,7 @@ class Distance {
                 }
             }
 
-            for(Pixel p : minDist) {
-                System.out.println("("+p.getX()+","+p.getY()+","+p.getGrayValue()+","+p.isVisited()+")");
-            }
-
-            eightNeighbourDistance(Im, minDist.peek(), distance, minPoints);
+            eightNeighbourDistance(Im, minDist.pop(), distance, minPoints);
         }
     }
 }
@@ -196,13 +218,18 @@ class DBScan {
         System.out.print("Enter the minimum number of points: ");
         int minPoints = sc.nextInt();
 
-        System.out.println("\n\n#############################Input Image Array#############################");
+        System.out.println("\n\n#############################INPUT IMAGE ARRAY#############################");
         for(int i=0; i<pixelArr.length; i++) {
             if(i%imWidth==0) System.out.println();
             System.out.print("(" + pixelArr[i].getX() + ", " + pixelArr[i].getY() + ", " + pixelArr[i].getGrayValue() + ")    ");
         }
-        System.out.println("\n#########################End of Input Image Array##########################\n\n\n");
+        System.out.println("\n#########################END OF INPUT IMAGE ARRAY##########################\n\n\n");
 
         D.eightNeighbourDistance(image,pixelArr[36],distance,minPoints);
+
+        // Print Image labels
+        System.out.println("\n\n##############################BEGIN PRINTING LABELS###########################");
+        image.printLabels();
+        System.out.println("\n#####################################END LABELS###############################");
     }
 }
