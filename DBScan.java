@@ -93,7 +93,9 @@ class Image {
         int i=0;
         for(int j=0; j<width; j++) {
             for(int k=0; k<height; k++) {
-                System.out.print(visited[i++] + "\t");
+                if (visited[i++] == false)
+                    System.out.print("0\t");
+                else System.out.print("1\t");
             }
             System.out.println();
         }
