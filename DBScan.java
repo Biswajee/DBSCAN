@@ -1,5 +1,4 @@
 //import libraries
-
 import java.util.*;
 
 // Base pixel class
@@ -26,10 +25,10 @@ class Pixel {
         return grayValue;   // Get Gray value of pixel
     }
     int getX() {
-        return coordX;      // Get X coordinate value of pixel
+        return coordX;              // Get X coordinate value of pixel
     }
     int getY() {
-        return coordY;      // Get Y coordinate value of pixel
+        return coordY;              // Get Y coordinate value of pixel
     }
 
     boolean isVisited() { return visited; }         // Checks if pixel is DFS visited
@@ -126,8 +125,7 @@ class Distance {
          */
         Vector<pixelDistance> eightND = new Vector<>();
 
-        if(A.getX()-1 < 0 || A.getY()-1 < 0 || A.getX()+1 > Im.width || A.getY()+1 > Im.height) {
-            System.out.println("Cannot test boundary pixels for now !");
+        if(A.getX()-1 < 0 || A.getY()-1 < 0 || A.getX()+1 > Im.width || A.getY()+1 > Im.height || A.isVisited()==true) {
              if(minDist.isEmpty() == false) minDist.pop();
         }
         else {
@@ -155,10 +153,16 @@ class Distance {
             // Select only those pixels lesser than min distance
 
             for(pixelDistance p : eightND) {
-                if(p.distance <= distance)
+                if(p.distance <= distance) {
+                    p.pixel.setVisited(); // setting pixel as visited, so will not be traversed again.
                     minDist.push(p.pixel);
+                }
             }
-            System.out.println(minDist);
+
+            for(Pixel p : minDist) {
+                System.out.println("("+p.getX()+","+p.getY()+","+p.getGrayValue()+","+p.isVisited()+")");
+            }
+
             eightNeighbourDistance(Im, minDist.peek(), distance, minPoints);
         }
     }
