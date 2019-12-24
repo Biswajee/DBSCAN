@@ -5,14 +5,15 @@ import java.util.*;
 // Base pixel class
 class Pixel {
 
-    int grayValue;
-    int coordX;
-    int coordY;
-
+    private int grayValue;
+    private int coordX;
+    private int coordY;
+    private boolean visited;
     Pixel() {               // default constructor
         this.grayValue = 0;
         this.coordX = 0;
         this.coordY = 0;
+        this.visited = false;
     }
 
     Pixel(int grayValue, int coordX, int coordY) {
@@ -24,14 +25,15 @@ class Pixel {
     int getGrayValue() {
         return grayValue;   // Get Gray value of pixel
     }
-
     int getX() {
         return coordX;      // Get X coordinate value of pixel
     }
-
     int getY() {
         return coordY;      // Get Y coordinate value of pixel
     }
+
+    boolean isVisited() { return visited; }         // Checks if pixel is DFS visited
+    void setVisited() { this.visited = true; }      // Sets pixel as DFS visited
 }
 
 // Image Class - defines an image using `Pixel` objects
@@ -67,7 +69,7 @@ class Image {
         int i=0, j=0;
         for (int k=0; k < X.length; k++) {
             ImgArray[i][j++] = X[k].getGrayValue();   // Updates gray value for array of pixels on image
-            if(j==32) { j=0; i++; }
+            if(j==8) { j=0; i++; }
         }
     }
 
@@ -102,6 +104,7 @@ class pixelDistance {
 
 // Distance measure for image clustering algorithms
 class Distance {
+    Stack<Pixel> minDist = new Stack<>();
     // Pixel A: Seed pixel, Pixel B: 8 Neighbour pixel
     double euclidian(Pixel A, Pixel B) {
         return Math.sqrt(Math.pow(Math.abs(A.getGrayValue() - B.getGrayValue()), 2));
@@ -123,34 +126,33 @@ class Distance {
          */
         Vector<pixelDistance> eightND = new Vector<>();
 
-        if(A.coordX-1 < 0 || A.coordY-1 < 0 || A.coordX+1 > Im.width || A.coordY+1 > Im.height) {
+        if(A.getX()-1 < 0 || A.getY()-1 < 0 || A.getX()+1 > Im.width || A.getY()+1 > Im.height) {
             System.out.println("Cannot test boundary pixels for now !");
-            return;
+             if(minDist.isEmpty() == false) minDist.pop();
         }
         else {
-            int seedPixel = Im.getGrayValueFromCoord(A.coordX, A.coordY);
-            int northWest = Im.getGrayValueFromCoord(A.coordX-1, A.coordY+1);
-            int top = Im.getGrayValueFromCoord(A.coordX, A.coordY+1);
-            int northEast = Im.getGrayValueFromCoord(A.coordX+1, A.coordY+1);
-            int west = Im.getGrayValueFromCoord(A.coordX-1, A.coordY);
-            int east = Im.getGrayValueFromCoord(A.coordX+1, A.coordY);
-            int southEast = Im.getGrayValueFromCoord(A.coordX+1, A.coordY-1);
-            int southWest = Im.getGrayValueFromCoord(A.coordX-1, A.coordY-1);
-            int bottom = Im.getGrayValueFromCoord(A.coordX, A.coordY-1);
+            int seedPixel = Im.getGrayValueFromCoord(A.getX(), A.getY());
+            int northWest = Im.getGrayValueFromCoord(A.getX()-1, A.getY()+1);
+            int top = Im.getGrayValueFromCoord(A.getX(), A.getY()+1);
+            int northEast = Im.getGrayValueFromCoord(A.getX()+1, A.getY()+1);
+            int west = Im.getGrayValueFromCoord(A.getX()-1, A.getY());
+            int east = Im.getGrayValueFromCoord(A.getX()+1, A.getY());
+            int southEast = Im.getGrayValueFromCoord(A.getX()+1, A.getY()-1);
+            int southWest = Im.getGrayValueFromCoord(A.getX()-1, A.getY()-1);
+            int bottom = Im.getGrayValueFromCoord(A.getX(), A.getY()-1);
 
             // City block -- need to add euclidean distance and make section flexible
 
-            eightND.add(new pixelDistance(Math.abs(northWest-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY+1),A.coordX-1, A.coordY+1)));   // north-west pixel distance
-            eightND.add(new pixelDistance(Math.abs(top-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY+1),A.coordX-1, A.coordY+1)));         // top pixel distance
-            eightND.add(new pixelDistance(Math.abs(northEast-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX+1, A.coordY+1),A.coordX+1, A.coordY+1)));   // north east pixel distance
-            eightND.add(new pixelDistance(Math.abs(west-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY),A.coordX-1, A.coordY)));        // west pixel distance
-            eightND.add(new pixelDistance(Math.abs(east-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX+1, A.coordY),A.coordX+1, A.coordY)));        // east pixel distance
-            eightND.add(new pixelDistance(Math.abs(southWest-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX-1, A.coordY-1),A.coordX-1, A.coordY-1)));   // south-west pixel distance
-            eightND.add(new pixelDistance(Math.abs(bottom-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX, A.coordY-1),A.coordX, A.coordY-1)));      // bottom pixel distance
-            eightND.add(new pixelDistance(Math.abs(southEast-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.coordX+1, A.coordY-1),A.coordX+1, A.coordY-1)));   // south-east pixel distance
+            eightND.add(new pixelDistance(Math.abs(northWest-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()-1, A.getY()+1),A.getX()-1, A.getY()+1)));   // north-west pixel distance
+            eightND.add(new pixelDistance(Math.abs(top-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()-1, A.getY()+1),A.getX()-1, A.getY()+1)));         // top pixel distance
+            eightND.add(new pixelDistance(Math.abs(northEast-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()+1, A.getY()+1),A.getX()+1, A.getY()+1)));   // north east pixel distance
+            eightND.add(new pixelDistance(Math.abs(west-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()-1, A.getY()),A.getX()-1, A.getY())));        // west pixel distance
+            eightND.add(new pixelDistance(Math.abs(east-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()+1, A.getY()),A.getX()+1, A.getY())));        // east pixel distance
+            eightND.add(new pixelDistance(Math.abs(southWest-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()-1, A.getY()-1),A.getX()-1, A.getY()-1)));   // south-west pixel distance
+            eightND.add(new pixelDistance(Math.abs(bottom-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX(), A.getY()-1),A.getX(), A.getY()-1)));      // bottom pixel distance
+            eightND.add(new pixelDistance(Math.abs(southEast-seedPixel), new Pixel(Im.getGrayValueFromCoord(A.getX()+1, A.getY()-1),A.getX()+1, A.getY()-1)));   // south-east pixel distance
 
             // Select only those pixels lesser than min distance
-            Stack<Pixel> minDist = new Stack<>();
 
             for(pixelDistance p : eightND) {
                 if(p.distance <= distance)
@@ -163,17 +165,18 @@ class Distance {
 }
 
 class DBScan {
-
     public static void main(String args[]) {
 
-        Image image = new Image(32, 32);
-        Pixel pixelArr[] = new Pixel[32*32];
+        int imWidth = 8;
+        int imHeight = 8;
+        Image image = new Image(imWidth, imHeight);
+        Pixel pixelArr[] = new Pixel[imWidth*imHeight];
         Scanner sc = new Scanner(System.in);
         Distance D = new Distance();
         // Create random valued pixels in array
-        for (int i=0, j=0; i < pixelArr.length; i++) {
-            pixelArr[i] = new Pixel((int) (Math.random() * 255), i, j++);
-            if(j==32) { j=0; }
+        for (int i=0, j=0, k=0; i < pixelArr.length; i++) {
+            pixelArr[i] = new Pixel((int) (Math.random() * 255), k, j++);
+            if(j==imHeight) { j=0; k++;}
         }
 
         // Push pixel array to image
@@ -189,8 +192,13 @@ class DBScan {
         System.out.print("Enter the minimum number of points: ");
         int minPoints = sc.nextInt();
 
-        D.eightNeighbourDistance(image,pixelArr[24],distance,minPoints);
+        System.out.println("\n\n#############################Input Image Array#############################");
+        for(int i=0; i<pixelArr.length; i++) {
+            if(i%imWidth==0) System.out.println();
+            System.out.print("(" + pixelArr[i].getX() + ", " + pixelArr[i].getY() + ", " + pixelArr[i].getGrayValue() + ")    ");
+        }
+        System.out.println("\n#########################End of Input Image Array##########################\n\n\n");
 
-
+        D.eightNeighbourDistance(image,pixelArr[36],distance,minPoints);
     }
 }
