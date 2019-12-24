@@ -71,7 +71,7 @@ class Image {
         int i=0, j=0;
         for (int k=0; k < X.length; k++) {
             ImgArray[i][j++] = X[k].getGrayValue();   // Updates gray value for array of pixels on image
-            if(j==8) { j=0; i++; }
+            if(j==(int)Math.sqrt(X.length)) { j=0; i++; }
         }
         // TODO: Section for registering visited pixels
     }
@@ -195,17 +195,38 @@ class Distance {
 class DBScan {
     public static void main(String args[]) {
 
-        int imWidth = 8;
-        int imHeight = 8;
+        int imWidth = 3;
+        int imHeight = 3;
         Image image = new Image(imWidth, imHeight);
         Pixel pixelArr[] = new Pixel[imWidth*imHeight];
         Scanner sc = new Scanner(System.in);
         Distance D = new Distance();
         // Create random valued pixels in array
-        for (int i=0, j=0, k=0; i < pixelArr.length; i++) {
-            pixelArr[i] = new Pixel((int) (Math.random() * 255), k, j++);
-            if(j==imHeight) { j=0; k++;}
-        }
+//        for (int i=0, j=0, k=0; i < pixelArr.length; i++) {
+//            pixelArr[i] = new Pixel((int) (Math.random() * 255), k, j++);
+//            if(j==imHeight) { j=0; k++;}
+//        }
+
+
+        // Custom pixel array 3x3
+        /*  __               __
+         * |                   |
+         * | 50     60      70 |
+         * | 40     20      1  |
+         * | 40     80      20 |
+         * |                   |
+         *  ¯¯               ¯¯
+         */
+        pixelArr[0] = new Pixel(50,0,0);
+        pixelArr[1] = new Pixel(60,0,1);
+        pixelArr[2] = new Pixel(70,0,2);
+        pixelArr[3] = new Pixel(40,1,0);
+        pixelArr[4] = new Pixel(20,1,1);
+        pixelArr[5] = new Pixel(01,1,2);
+        pixelArr[6] = new Pixel(40,2,0);
+        pixelArr[7] = new Pixel(30,2,1);
+        pixelArr[8] = new Pixel(20,2,2);
+
 
         // Push pixel array to image
         image.definePixelArray(pixelArr);
@@ -227,7 +248,7 @@ class DBScan {
         }
         System.out.println("\n#########################END OF INPUT IMAGE ARRAY##########################\n\n\n");
 
-        D.eightNeighbourDistance(image,pixelArr[36],distance,minPoints);
+        D.eightNeighbourDistance(image,pixelArr[4],distance,minPoints);
 
         // Print Image labels
         System.out.println("\n\n##############################BEGIN PRINTING LABELS###########################");

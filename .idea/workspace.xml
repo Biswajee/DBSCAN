@@ -17,12 +17,12 @@
       <file leaf-file-name="DBScan.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DBScan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="97" column="21" lean-forward="false" selection-start-line="97" selection-start-column="21" selection-end-line="97" selection-end-column="21" />
+            <state relative-caret-position="1274">
+              <caret line="250" column="49" lean-forward="false" selection-start-line="250" selection-start-column="49" selection-end-line="250" selection-end-column="49" />
               <folding>
                 <element signature="class#Pixel#0" expanded="false" />
-                <element signature="e#2555#2556#0" expanded="true" />
-                <element signature="e#2592#2593#0" expanded="true" />
+                <element signature="e#2578#2579#0" expanded="true" />
+                <element signature="e#2615#2616#0" expanded="true" />
                 <element signature="class#pixelDistance#0" expanded="false" />
               </folding>
             </state>
@@ -279,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577211903261</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Update repository">
+      <created>1577213353940</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1577213353940</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -295,7 +302,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.70212764" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5057283" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -350,6 +357,7 @@
     <MESSAGE value="Testing" />
     <MESSAGE value="Update repository" />
     <option name="LAST_COMMIT_MESSAGE" value="Update repository" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -368,8 +376,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="class#Pixel#0" expanded="false" />
-            <element signature="e#2555#2556#0" expanded="true" />
-            <element signature="e#2592#2593#0" expanded="true" />
+            <element signature="e#2578#2579#0" expanded="true" />
+            <element signature="e#2615#2616#0" expanded="true" />
             <element signature="class#pixelDistance#0" expanded="false" />
           </folding>
         </state>
@@ -381,8 +389,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="class#Pixel#0" expanded="false" />
-            <element signature="e#2555#2556#0" expanded="true" />
-            <element signature="e#2592#2593#0" expanded="true" />
+            <element signature="e#2578#2579#0" expanded="true" />
+            <element signature="e#2615#2616#0" expanded="true" />
             <element signature="class#pixelDistance#0" expanded="false" />
           </folding>
         </state>
@@ -394,8 +402,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="class#Pixel#0" expanded="false" />
-            <element signature="e#2555#2556#0" expanded="true" />
-            <element signature="e#2592#2593#0" expanded="true" />
+            <element signature="e#2578#2579#0" expanded="true" />
+            <element signature="e#2615#2616#0" expanded="true" />
             <element signature="class#pixelDistance#0" expanded="false" />
           </folding>
         </state>
@@ -404,12 +412,12 @@
     <entry file="file://$PROJECT_DIR$/DBScan.class" />
     <entry file="file://$PROJECT_DIR$/DBScan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="97" column="21" lean-forward="false" selection-start-line="97" selection-start-column="21" selection-end-line="97" selection-end-column="21" />
+        <state relative-caret-position="1274">
+          <caret line="250" column="49" lean-forward="false" selection-start-line="250" selection-start-column="49" selection-end-line="250" selection-end-column="49" />
           <folding>
             <element signature="class#Pixel#0" expanded="false" />
-            <element signature="e#2555#2556#0" expanded="true" />
-            <element signature="e#2592#2593#0" expanded="true" />
+            <element signature="e#2578#2579#0" expanded="true" />
+            <element signature="e#2615#2616#0" expanded="true" />
             <element signature="class#pixelDistance#0" expanded="false" />
           </folding>
         </state>
